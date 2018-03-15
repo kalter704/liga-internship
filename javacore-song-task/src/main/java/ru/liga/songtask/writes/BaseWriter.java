@@ -2,11 +2,11 @@ package ru.liga.songtask.writes;
 
 import java.io.IOException;
 
-public abstract class BaseWrite {
+public abstract class BaseWriter {
 
-    private final BaseWrite writer;
+    private final BaseWriter writer;
 
-    public BaseWrite(BaseWrite writer) {
+    public BaseWriter(BaseWriter writer) {
         this.writer = writer;
     }
 

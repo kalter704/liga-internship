@@ -1,7 +1,7 @@
 package ru.liga.songtask;
 
 import ru.liga.songtask.domain.SimpleMidiFile;
-import ru.liga.songtask.writes.BaseWrite;
+import ru.liga.songtask.writes.BaseWriter;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,9 +10,9 @@ public class SongAnalysisTask implements Task {
 
     private final SongAnalysis songAnalysis;
 
-    private final BaseWrite writer;
+    private final BaseWriter writer;
 
-    public SongAnalysisTask(File midiFile, BaseWrite writer) {
+    public SongAnalysisTask(File midiFile, BaseWriter writer) {
         this.songAnalysis = new SongAnalysis(new SimpleMidiFile(midiFile));
         this.writer = writer;
     }

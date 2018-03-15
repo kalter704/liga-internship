@@ -3,7 +3,7 @@ package ru.liga;
 import ru.liga.songtask.SongAnalysisTask;
 import ru.liga.songtask.SongChangeTask;
 import ru.liga.songtask.Task;
-import ru.liga.songtask.writes.BaseWrite;
+import ru.liga.songtask.writes.BaseWriter;
 import ru.liga.songtask.writes.FileWriter;
 import ru.liga.songtask.writes.LogWriter;
 
@@ -18,7 +18,7 @@ public class ArgumentsManager {
         Task task = null;
         File inputFile = new Resources(args[0]).getFile();
         if ("analyze".equalsIgnoreCase(args[1])) {
-            BaseWrite write = new LogWriter(App.class);
+            BaseWriter write = new LogWriter(App.class);
             if (args.length >= 3 && "-f".equalsIgnoreCase(args[2])) {
                 write = new FileWriter(new File(inputFile.getParent() + "/analyze"), write);
             }

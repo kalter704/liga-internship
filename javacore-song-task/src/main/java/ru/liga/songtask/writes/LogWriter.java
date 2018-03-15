@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class LogWriter extends BaseWrite {
+public class LogWriter extends BaseWriter {
 
     private final Logger logger;
 
@@ -14,7 +14,7 @@ public class LogWriter extends BaseWrite {
         logger = LoggerFactory.getLogger(clazz);
     }
 
-    public LogWriter(Class clazz, BaseWrite writer) {
+    public LogWriter(Class clazz, BaseWriter writer) {
         super(writer);
         logger = LoggerFactory.getLogger(clazz);
     }

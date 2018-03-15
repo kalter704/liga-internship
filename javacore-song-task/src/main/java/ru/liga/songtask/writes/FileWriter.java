@@ -3,7 +3,7 @@ package ru.liga.songtask.writes;
 import java.io.File;
 import java.io.IOException;
 
-public class FileWriter extends BaseWrite {
+public class FileWriter extends BaseWriter {
 
     private final java.io.FileWriter fileWriter;
 
@@ -12,7 +12,7 @@ public class FileWriter extends BaseWrite {
         fileWriter = new java.io.FileWriter(outFile);
     }
 
-    public FileWriter(File outFile, BaseWrite writer) throws IOException {
+    public FileWriter(File outFile, BaseWriter writer) throws IOException {
         super(writer);
         fileWriter = new java.io.FileWriter(outFile);
     }
