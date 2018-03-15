@@ -6,18 +6,16 @@ import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.meta.Tempo;
 
-import java.io.File;
-import java.io.IOException;
-
 public class SongChange {
 
     private final MidiFile midiFile;
 
-    private final File outFile;
-
-    public SongChange(MidiFile midiFile, File outFile) {
+    public SongChange(MidiFile midiFile) {
         this.midiFile = midiFile;
-        this.outFile = outFile;
+    }
+
+    public MidiFile getMidiFile() {
+        return midiFile;
     }
 
     public void changeTempo(int delta) {
@@ -43,14 +41,6 @@ public class SongChange {
 
     private void change(Change func) {
         midiFile.getTracks().forEach(midiTrack -> midiTrack.getEvents().forEach(func::change));
-    }
-
-    public void save() {
-        try {
-            midiFile.writeToFile(outFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private interface Change {
