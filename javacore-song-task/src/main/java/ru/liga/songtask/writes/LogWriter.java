@@ -2,14 +2,12 @@ package ru.liga.songtask.writes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.liga.App;
 
 import java.io.IOException;
-import java.io.Writer;
 
 public class LogWriter extends BaseWrite {
 
-    private static Logger logger = null;
+    private final Logger logger;
 
     public LogWriter(Class clazz) {
         super(null);

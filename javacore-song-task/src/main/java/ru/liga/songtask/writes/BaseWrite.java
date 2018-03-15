@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public abstract class BaseWrite {
 
-    private BaseWrite writer;
+    private final BaseWrite writer;
 
     public BaseWrite(BaseWrite writer) {
         this.writer = writer;

@@ -8,9 +8,9 @@ import java.io.IOException;
 
 public class SongAnalysisTask implements Task {
 
-    private SongAnalysis songAnalysis;
+    private final SongAnalysis songAnalysis;
 
-    private BaseWrite writer;
+    private final BaseWrite writer;
 
     public SongAnalysisTask(File midiFile, BaseWrite writer) {
         this.songAnalysis = new SongAnalysis(new SimpleMidiFile(midiFile));

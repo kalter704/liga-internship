@@ -10,7 +10,7 @@ import java.util.TreeMap;
 
 public class SongAnalysis {
 
-    private SimpleMidiFile simpleMidiFile;
+    private final SimpleMidiFile simpleMidiFile;
 
     public SongAnalysis(SimpleMidiFile simpleMidiFile) {
         this.simpleMidiFile = simpleMidiFile;

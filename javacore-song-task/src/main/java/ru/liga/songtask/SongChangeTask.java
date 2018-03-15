@@ -10,7 +10,7 @@ public class SongChangeTask implements Task {
 
     private SongChange songChange = null;
 
-    private Map<String, Integer> commands;
+    private final Map<String, Integer> commands;
 
     public SongChangeTask(File inputFile, Map<String, Integer> commands) {
         String fileName = inputFile.getName().split("\\.")[0];

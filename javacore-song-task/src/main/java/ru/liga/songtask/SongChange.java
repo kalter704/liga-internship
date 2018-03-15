@@ -11,9 +11,9 @@ import java.io.IOException;
 
 public class SongChange {
 
-    private MidiFile midiFile;
+    private final MidiFile midiFile;
 
-    private File outFile;
+    private final File outFile;
 
     public SongChange(MidiFile midiFile, File outFile) {
         this.midiFile = midiFile;

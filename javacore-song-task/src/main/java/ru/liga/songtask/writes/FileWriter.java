@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class FileWriter extends BaseWrite {
 
-    private java.io.FileWriter fileWriter;
+    private final java.io.FileWriter fileWriter;
 
     public FileWriter(File outFile) throws IOException {
         super(null);
