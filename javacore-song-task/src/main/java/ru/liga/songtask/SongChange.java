@@ -41,7 +41,7 @@ public class SongChange {
         });
     }
 
-    public void change(Change func) {
+    private void change(Change func) {
         midiFile.getTracks().forEach(midiTrack -> midiTrack.getEvents().forEach(func::change));
     }
 
