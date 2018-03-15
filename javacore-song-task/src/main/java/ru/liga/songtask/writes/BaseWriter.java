@@ -1,7 +1,5 @@
 package ru.liga.songtask.writes;
 
-import java.io.IOException;
-
 public abstract class BaseWriter {
 
     private final BaseWriter writer;
@@ -10,23 +8,23 @@ public abstract class BaseWriter {
         this.writer = writer;
     }
 
-    public void write(String s) throws IOException {
+    public void write(String s) {
         if (writer != null) {
             writer.write(s);
         }
     }
 
-    public void writeln(String s) throws IOException {
+    public void writeln(String s) {
         if (writer != null) {
             writer.writeln(s);
         }
     }
 
-    public void writeln() throws IOException {
+    public void writeln() {
         if (writer != null) {
             writer.writeln();
         }
     }
 
-    public void close() throws IOException {}
+    public void close() {}
 }

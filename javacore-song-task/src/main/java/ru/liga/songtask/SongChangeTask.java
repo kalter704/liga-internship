@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class SongChangeTask implements Task {
 
-    private final static Logger log = LoggerFactory.getLogger(SongChangeTask.class);
+    private final Logger log = LoggerFactory.getLogger(SongChangeTask.class);
 
     private SongChange songChange = null;
 

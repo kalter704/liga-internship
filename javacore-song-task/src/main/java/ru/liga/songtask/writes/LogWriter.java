@@ -20,19 +20,19 @@ public class LogWriter extends BaseWriter {
     }
 
     @Override
-    public void write(String s) throws IOException {
+    public void write(String s) {
         super.write(s);
         logger.info(s);
     }
 
     @Override
-    public void writeln(String s) throws IOException {
+    public void writeln(String s) {
         super.writeln(s);
         logger.info(s);
     }
 
     @Override
-    public void writeln() throws IOException {
+    public void writeln() {
         super.writeln();
         logger.info("");
     }
