@@ -13,7 +13,7 @@ public class SongAnalysisTest {
 
     private SongAnalysis songAnalysis;
 
-    private String fileName = "zombie.mid";
+    private final String fileName = "zombie.mid";
 
     @Before
     public void setUp() {

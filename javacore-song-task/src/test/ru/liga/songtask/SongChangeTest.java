@@ -19,7 +19,7 @@ public class SongChangeTest {
 
     private MidiFile zombie;
 
-    private String fileName = "zombie.mid";
+    private final String fileName = "zombie.mid";
 
     @Before
     public void setUp() throws IOException {

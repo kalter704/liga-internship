@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class SongAnalysisTaskTest {
 
-    private String fileName = "zombie.mid";
+    private final String fileName = "zombie.mid";
 
     @Test
     public void execute() throws Exception {
