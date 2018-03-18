@@ -1,5 +1,7 @@
 package ru.liga;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.liga.songtask.SongAnalysisTask;
 import ru.liga.songtask.SongChangeTask;
 import ru.liga.songtask.Task;
@@ -14,9 +16,19 @@ import java.util.Map;
 
 public class ArgumentsManager {
 
+    private static Logger log = LoggerFactory.getLogger(ArgumentsManager.class);
+
     public static Task getTaskByArg(String[] args) throws IOException {
         Task task = null;
-        File inputFile = new Resources(args[0]).getFile();
+        File inputFile = null;
+        try {
+            inputFile = new Resources(args[0]).getFile();
+        } catch (NullPointerException e) {
+            log.error(e.toString());
+        }
+        if (inputFile == null) {
+            return null;
+        }
         if ("analyze".equalsIgnoreCase(args[1])) {
             BaseWriter write = new LogWriter(App.class);
             if (args.length >= 3 && "-f".equalsIgnoreCase(args[2])) {
