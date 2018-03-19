@@ -28,7 +28,7 @@ public class SongChangeTest {
     }
 
     @Test
-    public void getMidiFile() throws Exception {
+    public void whenCallGetMidiFileReturnCorrectFile() throws Exception {
         MidiFile zombieTest = songChange.getMidiFile();
 
         Assertions.assertThat(zombie.getTracks().get(0).getEvents().size())
@@ -44,11 +44,22 @@ public class SongChangeTest {
     }
 
     @Test
-    public void changeTempo() throws Exception {
-        songChange.changeTempo(15);
+    public void whenChangeTempoBy15ReturnCorrectResult() throws Exception {
+        int delta = 15;
+        songChange.changeTempo(delta);
+        checkEqualityTempo(zombie, songChange.getMidiFile(), delta);
+    }
 
-        Iterator<MidiEvent> events = zombie.getTracks().get(0).getEvents().iterator();
-        Iterator<MidiEvent> eventsTest = songChange.getMidiFile().getTracks().get(0).getEvents().iterator();
+    @Test
+    public void whenChangeTransBy10ReturnCorrectResult() throws Exception {
+        int delta = 10;
+        songChange.changeTrans(delta);
+        checkEqualityTrans(zombie, songChange.getMidiFile(), delta);
+    }
+
+    private void checkEqualityTempo(MidiFile origin, MidiFile changed, int delta) {
+        Iterator<MidiEvent> events = origin.getTracks().get(0).getEvents().iterator();
+        Iterator<MidiEvent> eventsTest = changed.getTracks().get(0).getEvents().iterator();
 
         while (events.hasNext() && eventsTest.hasNext()) {
             MidiEvent me = events.next();
@@ -56,18 +67,14 @@ public class SongChangeTest {
             if (me instanceof Tempo) {
                 Tempo tempo = (Tempo) me;
                 Tempo tempTest = (Tempo) meTest;
-                Assertions.assertThat(tempo.getBpm() * ((float)(15 + 100) / 100)).isEqualTo(tempTest.getBpm());
+                Assertions.assertThat(tempo.getBpm() * ((float)(delta + 100) / 100)).isEqualTo(tempTest.getBpm());
             }
         }
     }
 
-    @Test
-    public void changeTrans() throws Exception {
-        int delta = 10;
-        songChange.changeTrans(delta);
-
-        Iterator<MidiEvent> events = zombie.getTracks().get(0).getEvents().iterator();
-        Iterator<MidiEvent> eventsTest = songChange.getMidiFile().getTracks().get(0).getEvents().iterator();
+    private void checkEqualityTrans(MidiFile origin, MidiFile changed, int delta) {
+        Iterator<MidiEvent> events = origin.getTracks().get(0).getEvents().iterator();
+        Iterator<MidiEvent> eventsTest = changed.getTracks().get(0).getEvents().iterator();
 
         while (events.hasNext() && eventsTest.hasNext()) {
             MidiEvent me = events.next();

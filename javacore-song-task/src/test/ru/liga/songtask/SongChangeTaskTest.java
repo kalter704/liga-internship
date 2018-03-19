@@ -12,7 +12,7 @@ import java.util.Map;
 public class SongChangeTaskTest {
 
     @Test
-    public void execute() throws Exception {
+    public void whenExecuteSongChangeTaskCreateFileWithCorrectData() throws Exception {
         int trans = 5;
         int tempo = 11;
 

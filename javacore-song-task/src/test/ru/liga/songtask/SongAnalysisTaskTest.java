@@ -15,7 +15,7 @@ public class SongAnalysisTaskTest {
     private final String fileName = "zombie.mid";
 
     @Test
-    public void execute() throws Exception {
+    public void whenExecuteSongAnalysisTaskCreateFileWithCorrectResult() throws Exception {
 
         File originalFile = new Resources(fileName).getFile();
 
