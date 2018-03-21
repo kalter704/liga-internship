@@ -28,21 +28,15 @@ public class SongAnalysisTask implements Task {
 
         writer.writeln();
         writer.writeln("Анализ длительности нот (мс):");
-        songAnalysis.noteLengthCount().forEach((count, length) -> {
-            writer.writeln(count.toString() + ": " + length.toString());
-        });
+        songAnalysis.noteLengthCount().forEach((count, length) -> writer.writeln(count.toString() + ": " + length.toString()));
 
         writer.writeln();
         writer.writeln("Анализ нот по высоте:");
-        songAnalysis.noteHeightCount().forEach((noteSign, count) -> {
-            writer.writeln(noteSign.fullName() + ": " + count.toString());
-        });
+        songAnalysis.noteHeightCount().forEach((noteSign, count) -> writer.writeln(noteSign.fullName() + ": " + count.toString()));
 
         writer.writeln();
         writer.writeln("Анализ интервалов:");
-        songAnalysis.noteIntervalCount().forEach((interval, count) -> {
-            writer.writeln(interval.toString() + ": " + count.toString());
-        });
+        songAnalysis.noteIntervalCount().forEach((interval, count) -> writer.writeln(interval.toString() + ": " + count.toString()));
 
         writer.close();
 

@@ -1,5 +1,6 @@
 package ru.liga.songtask;
 
+import javafx.util.Pair;
 import ru.liga.songtask.domain.Note;
 import ru.liga.songtask.domain.NoteSign;
 import ru.liga.songtask.domain.SimpleMidiFile;
@@ -21,75 +22,65 @@ public class SongAnalysis {
     }
 
     public Note getHigherNote() {
-        return getNoteByCondition(((n1, n2) -> n2.sign().higher(n1.sign())));
+        return simpleMidiFile.vocalNoteList().stream().min(Comparator.comparing(Note::sign)).get();
     }
 
     public Note getLowerNote() {
-        return getNoteByCondition(((n1, n2) -> n2.sign().lower(n1.sign())));
+        return simpleMidiFile.vocalNoteList().stream().max(Comparator.comparing(Note::sign)).get();
     }
 
-    private Note getNoteByCondition(Condition condition) {
-        Note result = null;
-        for (Note note : simpleMidiFile.vocalNoteList()) {
-            if (result == null) {
-                result = note;
-                continue;
-            }
-            if (condition.compare(result, note)) {
-                result = note;
-            }
-        }
-        return result;
-    }
 
     public Map<Long, Long> noteLengthCount() {
         Map<Long, Long> noteLengthCountMap = new TreeMap<>(Comparator.reverseOrder());
         Float tickInMs = simpleMidiFile.tickInMs();
-        for (Note note : simpleMidiFile.vocalNoteList()) {
-            long noteLength = (long) (note.durationTicks() * tickInMs);
-            if (noteLengthCountMap.containsKey(noteLength)) {
-                noteLengthCountMap.put(noteLength, noteLengthCountMap.get(noteLength) + 1);
-            } else {
-                noteLengthCountMap.put(noteLength, 1L);
-            }
-        }
+        simpleMidiFile.vocalNoteList().stream()
+                .map(Note::durationTicks)
+                .map(durationTicks -> durationTicks * tickInMs)
+                .map(Float::longValue)
+                .map(noteLength -> {
+                    long count = 0;
+                    if (noteLengthCountMap.containsKey(noteLength)) {
+                        count = noteLengthCountMap.get(noteLength);
+                    }
+                    return new Pair<>(noteLength, count + 1);
+                }).forEach(keyValue -> noteLengthCountMap.put(keyValue.getKey(), keyValue.getValue()));
         return noteLengthCountMap;
     }
 
     public Map<NoteSign, Long> noteHeightCount() {
         Map<NoteSign, Long> noteHeightCountMap = new TreeMap<>(new NoteHeightComparator());
-        for (Note note : simpleMidiFile.vocalNoteList()) {
-            if (noteHeightCountMap.containsKey(note.sign())) {
-                noteHeightCountMap.put(note.sign(), noteHeightCountMap.get(note.sign()) + 1);
-            } else {
-                noteHeightCountMap.put(note.sign(), 1L);
-            }
-        }
+        simpleMidiFile.vocalNoteList().stream()
+                .map(note -> {
+                    long count = 0;
+                    if (noteHeightCountMap.containsKey(note.sign())) {
+                        count = noteHeightCountMap.get(note.sign());
+                    }
+                    return new Pair<>(note.sign(), count + 1);
+                }).forEach(keyValue -> noteHeightCountMap.put(keyValue.getKey(), keyValue.getValue()));
         return noteHeightCountMap;
     }
 
     public Map<Integer, Integer> noteIntervalCount() {
         Map<Integer, Integer> noteIntervalCountMap = new TreeMap<>();
-        Note previousNote = null;
-        for (Note note : simpleMidiFile.vocalNoteList()) {
-            if (previousNote == null) {
-                previousNote = note;
-                continue;
-            }
-            Integer diff = note.sign().diffInSemitones(previousNote.sign());
-            if (noteIntervalCountMap.containsKey(diff)) {
-                noteIntervalCountMap.put(diff, noteIntervalCountMap.get(diff) + 1);
-            } else {
-                noteIntervalCountMap.put(diff, 1);
-            }
-            previousNote = note;
-        }
+        final Note[] previousNote = new Note[1]/*{simpleMidiFile.vocalNoteList().get(0)}*/;
+        simpleMidiFile.vocalNoteList().stream()
+                .filter(note -> {
+                    if (previousNote[0] == null) {
+                        previousNote[0] = note;
+                        return false;
+                    }
+                    return true;
+                })
+                .map(note -> {
+                    Integer count = 0;
+                    Integer diff = note.sign().diffInSemitones(previousNote[0].sign());
+                    if (noteIntervalCountMap.containsKey(diff)) {
+                        count = noteIntervalCountMap.get(diff);
+                    }
+                    previousNote[0] = note;
+                    return new Pair<>(diff, count + 1);
+                }).forEach(keyValue -> noteIntervalCountMap.put(keyValue.getKey(), keyValue.getValue()));
         return noteIntervalCountMap;
-    }
-
-
-    private interface Condition {
-        boolean compare(Note n1, Note n2);
     }
 
     private class NoteHeightComparator implements Comparator<NoteSign> {
